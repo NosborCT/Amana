@@ -27,8 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Landing page para consultorio odontologico com odontopediatria e clinica geral para adultos.",
     icons: {
-      icon: "/favicon.svg",
-      shortcut: "/favicon.svg",
+      icon: "/amanda-teixeira-logo.png",
+      shortcut: "/amanda-teixeira-logo.png",
     },
     openGraph: {
       title: "Dra. Amanda Odontologia",
@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Dra. Amanda Odontologia",
       description:
-        "Odontopediatria e clinica geral em um consultorio acolhedor.",
+        "Especializando em odontopediatria e clinica geral em um consultorio acolhedor.",
       images: ["/clinic-interior.png"],
     },
   };

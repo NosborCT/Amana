@@ -86,13 +86,15 @@ img {
   width: 44px;
   height: 44px;
   flex: 0 0 44px;
-  display: grid;
-  place-items: center;
+  overflow: hidden;
   border-radius: 8px;
-  background: linear-gradient(135deg, var(--teal), var(--coral));
-  color: white;
-  font-size: 0.82rem;
-  font-weight: 800;
+  background: white;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .brand strong,
@@ -287,7 +289,7 @@ img {
 .metric p,
 .service-card p,
 .copy-stack p,
-.testimonial-grid p,
+.testimonial-track p,
 .location-copy p,
 .cta-section p,
 .site-footer p {
@@ -306,6 +308,41 @@ img {
   grid-template-columns: 0.8fr 1fr;
   gap: 72px;
   align-items: start;
+}
+
+.about-section {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.84fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(42px, 7vw, 96px);
+}
+
+.about-photo-wrap {
+  position: relative;
+  min-height: 600px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--mint);
+  box-shadow: var(--shadow);
+}
+
+.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.about-content {
+  max-width: 600px;
+}
+
+.about-content .copy-stack {
+  margin-top: 28px;
+}
+
+.about-button {
+  margin-top: 30px;
 }
 
 .section h2,
@@ -340,14 +377,26 @@ img {
   color: white;
 }
 
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.service-carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.service-track {
+  display: flex;
+  width: max-content;
   gap: 18px;
+  animation: service-carousel-slide 36s linear infinite;
+}
+
+.service-carousel:hover .service-track {
+  animation-play-state: paused;
 }
 
 .service-card {
-  min-height: 260px;
+  width: min(330px, 78vw);
+  min-height: 250px;
+  flex: 0 0 auto;
   padding: 28px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -381,7 +430,7 @@ img {
 
 .service-card p,
 .gallery-card p,
-.testimonial-grid p,
+.testimonial-track p,
 .cta-section p,
 .location-copy p {
   margin: 0;
@@ -447,13 +496,29 @@ img {
   line-height: 1.58;
 }
 
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+.testimonial-carousel {
+  width: 100%;
+  overflow: hidden;
 }
 
-.testimonial-grid blockquote {
+.testimonial-track {
+  display: flex;
+  width: max-content;
+  gap: 18px;
+  animation: testimonial-carousel-slide 60s linear infinite;
+}
+
+.testimonial-carousel:hover .testimonial-track {
+  animation-play-state: paused;
+}
+
+.google-reviews-button {
+  margin-top: 30px;
+}
+
+.testimonial-track blockquote {
+  width: min(360px, 82vw);
+  flex: 0 0 auto;
   margin: 0;
   min-height: 188px;
   padding: 28px;
@@ -463,7 +528,7 @@ img {
   box-shadow: 0 14px 44px rgba(36, 74, 70, 0.08);
 }
 
-.testimonial-grid p {
+.testimonial-track p {
   color: #365c5d;
   font-size: 1.02rem;
 }
@@ -492,35 +557,51 @@ img {
 
 .map-panel {
   min-height: 290px;
-  display: grid;
-  align-content: end;
-  gap: 12px;
+  position: relative;
+  overflow: hidden;
   border-radius: 8px;
-  padding: 28px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(223, 243, 237, 0.82)),
-    repeating-linear-gradient(45deg, rgba(15, 118, 110, 0.18) 0 1px, transparent 1px 20px);
-  color: var(--foreground);
   box-shadow: var(--shadow);
 }
 
-.map-panel span {
+.map-panel iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 290px;
+  border: 0;
+}
+
+.map-details {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  gap: 6px;
+  max-width: calc(100% - 36px);
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--foreground);
+  box-shadow: 0 10px 28px rgba(16, 47, 45, 0.18);
+}
+
+.map-details span {
   width: fit-content;
   border-radius: 999px;
-  padding: 7px 12px;
+  padding: 5px 9px;
   background: var(--coral);
   color: white;
   font-size: 0.76rem;
   font-weight: 900;
 }
 
-.map-panel strong {
+.map-details strong {
   max-width: 320px;
-  font-size: 1.45rem;
+  font-size: 1.05rem;
   line-height: 1.2;
 }
 
-.map-panel small {
+.map-details small {
   color: var(--muted);
   font-weight: 800;
 }
@@ -606,6 +687,24 @@ img {
   }
 }
 
+@keyframes service-carousel-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 9px));
+  }
+}
+
+@keyframes testimonial-carousel-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 9px));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -631,14 +730,18 @@ img {
   }
 
   .two-column,
+  .about-section,
   .location-band,
   .cta-section {
     grid-template-columns: 1fr;
   }
 
-  .service-grid,
-  .testimonial-grid {
-    grid-template-columns: 1fr;
+  .about-section {
+    gap: 40px;
+  }
+
+  .about-photo-wrap {
+    min-height: min(650px, 118vw);
   }
 
   .cta-actions {
@@ -679,6 +782,14 @@ img {
 
   .section {
     padding: 72px 0;
+  }
+
+  .about-section {
+    gap: 32px;
+  }
+
+  .about-photo-wrap {
+    min-height: 480px;
   }
 
   .section h2,
